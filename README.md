@@ -1,4 +1,4 @@
-# Evil::Metrics::[Rails]
+# Yabeda::[Rails]
 
 Built-in metrics for out-of-the box [Rails] applications monitoring 
 
@@ -9,9 +9,9 @@ if your monitoring system already collects Rails metrics (e.g. NewRelic) then yo
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'evil-metrics-rails'
+gem 'yabeda-rails'
 # Then add monitoring system adapter, e.g.:
-# gem 'evil-metrics-prometheus'
+# gem 'yabeda-prometheus'
 ```
 
 And then execute:
@@ -31,7 +31,7 @@ And then execute:
  - `on_controller_action`: Allows to collect
 
     ```ruby
-    Evil::Metrics::Rails.on_controller_action do |event, labels|
+    Yabeda::Rails.on_controller_action do |event, labels|
       next unless event.payload[:ext_service_runtime]
       time_in_seconds = event.payload[:ext_service_runtime] / 1000.0
       rails_ext_service_runtime.measure(labels, time_in_seconds)
@@ -46,7 +46,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/evil-metrics/evil-metrics-rails.
+Bug reports and pull requests are welcome on GitHub at https://github.com/yabeda-rb/yabeda-rails.
 
 ## License
 

@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
+lib = File.expand_path("lib", __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "yabeda/rails/version"
+
 Gem::Specification.new do |spec|
-  spec.name          = "evil-metrics-rails"
-  spec.version       = "0.1.0"
+  spec.name          = "yabeda-rails"
+  spec.version       = Yabeda::Rails::VERSION
   spec.authors       = ["Andrey Novikov"]
   spec.email         = ["envek@envek.name"]
 
   spec.summary       = "Extensible metrics for monitoring Ruby on Rails application"
   spec.description   = "Easy collecting your Rails apps metrics"
-  spec.homepage      = "https://github.com/evil-metrics/evil-metrics-rails"
+  spec.homepage      = "https://github.com/yabeda-rb/yabeda-rails"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -18,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "evil-metrics"
+  spec.add_dependency "yabeda"
   spec.add_dependency "rails"
 
   spec.add_development_dependency "bundler", "~> 1.16"

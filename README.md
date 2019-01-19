@@ -18,6 +18,23 @@ And then execute:
 
     $ bundle
 
+### Registering metrics on server process start
+
+Currently, yabeda-rails automatically registers rails metrics when a server is started via `rails server` or `puma -C config/puma.rb`. However, other application servers or launching via `rackup` aren't supported at the moment.
+
+A possible workaround is to detect server process and manually activate yabeda-rails in an initializer:
+
+```ruby
+# config/initializers/yabeda.rb
+
+if your_app_server_process? # Your logic here
+  Yabeda::Rails.install!
+end
+```
+
+You always can add support for your app server to [lib/yabeda/rails/railtie.rb](). Pull Requests are always welcome!
+
+
 ## Metrics
 
  - Total web requests received: `rails_requests_total`

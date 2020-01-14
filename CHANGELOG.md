@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.2.0 - 2020-01-14
+
+### Changed
+
+ - Added `tags` option to metric declarations for compatibility with yabeda and yabeda-prometheus 0.2. @Envek
 
 ## 0.1.2 - 2019-01-19
 

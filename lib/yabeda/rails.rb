@@ -23,13 +23,21 @@ module Yabeda
         Yabeda.configure do
           group :rails
 
-          counter   :requests_total, comment: "A counter of the total number of HTTP requests rails processed."
-          histogram :request_duration, unit: :seconds, buckets: LONG_RUNNING_REQUEST_BUCKETS,
+          counter   :requests_total,   comment: "A counter of the total number of HTTP requests rails processed.",
+                                       tags: %i[controller action status format method]
+
+          histogram :request_duration, tags: %i[controller action status format method],
+                                       unit: :seconds,
+                                       buckets: LONG_RUNNING_REQUEST_BUCKETS,
                                        comment: "A histogram of the response latency."
+
           histogram :view_runtime, unit: :seconds, buckets: LONG_RUNNING_REQUEST_BUCKETS,
-                                   comment: "A histogram of the view rendering time."
+                                   comment: "A histogram of the view rendering time.",
+                                   tags: %i[controller action status format method]
+
           histogram :db_runtime, unit: :seconds, buckets: LONG_RUNNING_REQUEST_BUCKETS,
-                                 comment: "A histogram of the activerecord execution time."
+                                 comment: "A histogram of the activerecord execution time.",
+                                 tags: %i[controller action status format method]
 
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
             event = ActiveSupport::Notifications::Event.new(*args)

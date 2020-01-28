@@ -12,9 +12,8 @@ module Yabeda
       end
 
       config.after_initialize do
-        next unless rails_server? || puma_server?
-
-        ::Yabeda::Rails.install!
+        ::Yabeda::Rails.install! if rails_server? || puma_server?
+        Yabeda.configure! unless Yabeda.already_configured?
       end
     end
   end

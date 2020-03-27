@@ -11,8 +11,12 @@ module Yabeda
         ::Rails.const_defined?('Puma::CLI')
       end
 
+      def unicorn_server?
+        ::Rails.const_defined?("Unicorn::Launcher")
+      end
+
       config.after_initialize do
-        ::Yabeda::Rails.install! if rails_server? || puma_server?
+        ::Yabeda::Rails.install! if rails_server? || puma_server? || unicorn_server?
         Yabeda.configure! unless Yabeda.already_configured?
       end
     end

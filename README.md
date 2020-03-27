@@ -22,7 +22,7 @@ And then execute:
 
 ### Registering metrics on server process start
 
-Currently, yabeda-rails automatically registers rails metrics when a server is started via `rails server` or `puma -C config/puma.rb`. However, other application servers or launching via `rackup` aren't supported at the moment.
+Currently, yabeda-rails automatically registers rails metrics when a server is started via `rails server`, `puma -C config/puma.rb` or `unicorn -c`. However, other application servers or launching via `rackup` aren't supported at the moment.
 
 A possible workaround is to detect server process and manually activate yabeda-rails in an initializer:
 

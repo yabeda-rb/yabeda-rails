@@ -34,7 +34,7 @@ if your_app_server_process? # Your logic here
 end
 ```
 
-You always can add support for your app server to [lib/yabeda/rails/railtie.rb](). Pull Requests are always welcome!
+You always can add support for your app server to [lib/yabeda/rails/railtie.rb](lib/yabeda/rails/railtie.rb). Pull Requests are always welcome!
 
 
 ## Metrics

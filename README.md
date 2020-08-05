@@ -57,6 +57,26 @@ You always can add support for your app server to [lib/yabeda/rails/railtie.rb](
     end
     ```
 
+## Custom tags
+
+You can add additional tags to the existing metrics by adding custom payload to your controller.
+
+```ruby
+# This block is optional but some adapters (like Prometheus) requires that all tags should be declared in advance
+Yabeda.configure do
+  default_tag :importance, nil
+end
+
+class ApplicationController < ActionController::Base
+  def append_info_to_payload(payload)
+    super
+    { importance: extract_importance(params) }
+  end
+end
+```
+`append_info_to_payload` is a method from [ActionController::Instrumentation](https://api.rubyonrails.org/classes/ActionController/Instrumentation.html#method-i-append_info_to_payload)
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

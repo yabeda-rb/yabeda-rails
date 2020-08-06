@@ -70,7 +70,7 @@ end
 class ApplicationController < ActionController::Base
   def append_info_to_payload(payload)
     super
-    { importance: extract_importance(params) }
+    payload[:importance] = extract_importance(params)
   end
 end
 ```

@@ -15,9 +15,8 @@ module Yabeda
         ::Rails.const_defined?("Unicorn::Launcher")
       end
 
-      config.after_initialize do
+      initializer "yabeda-rails.metrics" do
         ::Yabeda::Rails.install! if rails_server? || puma_server? || unicorn_server?
-        Yabeda.configure! unless Yabeda.already_configured?
       end
     end
   end

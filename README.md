@@ -2,7 +2,7 @@
 
 Built-in metrics for out-of-the box [Rails] applications monitoring.
 
-If your monitoring system already collects Rails metrics (e.g. NewRelic) then you don't need this gem metrics, but `yabeda-rails` also will automatically configure Yabeda in your Rails application.
+If your monitoring system already collects Rails metrics (e.g. NewRelic) then most probably you don't need this gem.
 
 Sample Grafana dashboard ID: [11668](https://grafana.com/grafana/dashboards/11668)
 

@@ -11,6 +11,6 @@ group :development, :test do
   gem "pry"
   gem "pry-byebug", platform: :mri
 
-  gem "rubocop"
+  gem "rubocop", "~> 1.8"
   gem "rubocop-rspec"
 end

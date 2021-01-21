@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require "yabeda"
+require "rails"
 require "yabeda/rails/railtie"
 
 module Yabeda
+  # Minimal set of Rails-specific metrics for using with Yabeda
   module Rails
     LONG_RUNNING_REQUEST_BUCKETS = [
       0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, # standard
@@ -19,6 +21,8 @@ module Yabeda
         controller_handlers << block
       end
 
+      # Declare metrics and install event handlers for collecting themya
+      # rubocop: disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
       def install!
         Yabeda.configure do
           group :rails
@@ -60,9 +64,10 @@ module Yabeda
           end
         end
       end
+      # rubocop: enable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
 
-      def ms2s(ms)
-        (ms.to_f / 1000).round(3)
+      def ms2s(milliseconds)
+        (milliseconds.to_f / 1000).round(3)
       end
     end
   end

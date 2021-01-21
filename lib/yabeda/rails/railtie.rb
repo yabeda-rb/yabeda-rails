@@ -12,7 +12,7 @@ module Yabeda
       end
 
       def puma_server?
-        ::Rails.const_defined?('Puma::CLI')
+        ::Rails.const_defined?("Puma::CLI")
       end
 
       def unicorn_server?

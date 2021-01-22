@@ -47,6 +47,12 @@ module Yabeda
                                  comment: "A histogram of the activerecord execution time.",
                                  tags: %i[controller action status format method]
 
+          if config.apdex_target
+            gauge :apdex_target, unit: :seconds,
+                                 comment: "Tolerable time for Apdex (T value: maximum duration of satisfactory request)"
+            collect { rails_apdex_target.set({}, config.apdex_target) }
+          end
+
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
             event = ActiveSupport::Notifications::Event.new(*args)
             labels = {

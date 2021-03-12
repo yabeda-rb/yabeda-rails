@@ -51,7 +51,8 @@ module Yabeda
               status: event.payload[:status],
               format: event.payload[:format],
               method: event.payload[:method].downcase,
-            }.merge!(event.payload.slice(*Yabeda.default_tags.keys))
+            }
+            labels.merge!(event.payload.slice(*Yabeda.default_tags.keys - labels.keys))
 
             rails_requests_total.increment(labels)
             rails_request_duration.measure(labels, Yabeda::Rails.ms2s(event.duration))

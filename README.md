@@ -85,17 +85,17 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ### Releasing
 
- 1. Bump version number in `lib/yabeda/version.rb`
+ 1. Bump version number in `lib/yabeda/rails/version.rb`
 
-    In case of pre-releases keep in mind [rubygems/rubygems#3086](https://github.com/rubygems/rubygems/issues/3086) and check version with command like `Gem::Version.new(Yabeda::VERSION).to_s`
+    In case of pre-releases keep in mind [rubygems/rubygems#3086](https://github.com/rubygems/rubygems/issues/3086) and check version with command like `Gem::Version.new(Yabeda::Rails::VERSION).to_s`
 
  2. Fill `CHANGELOG.md` with missing changes, add header with version and date.
 
  3. Make a commit:
 
     ```sh
-    git add lib/yabeda/version.rb CHANGELOG.md
-    version=$(ruby -r ./lib/yabeda/version.rb -e "puts Gem::Version.new(Yabeda::VERSION)")
+    git add lib/yabeda/rails/version.rb CHANGELOG.md
+    version=$(ruby -r ./lib/yabeda/rails/version.rb -e "puts Gem::Version.new(Yabeda::Rails::VERSION)")
     git commit --message="${version}: " --edit
     ```
 

@@ -1,4 +1,4 @@
-# Yabeda::[Rails]
+# ![Yabeda::Rails](./yabeda-rails-logo.png)
 
 Built-in metrics for out-of-the box [Rails] applications monitoring.
 

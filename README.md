@@ -76,6 +76,16 @@ end
 ```
 `append_info_to_payload` is a method from [ActionController::Instrumentation](https://api.rubyonrails.org/classes/ActionController/Instrumentation.html#method-i-append_info_to_payload)
 
+## Default tags: controller/action
+
+```
+Yabeda::Rails.enable_controller_action_default_tags = true
+```
+
+Other metrics that are generated while handing a request will include a tag for the controller and the action that we being handled. This works well with other yabeda gems like [yabeda-http_requests](https://github.com/yabeda-rb/yabeda-http_requestshttps://github.com/yabeda-rb/yabeda-http_requests).
+
+Due to the potential for high cardinality, this feature is disabled by default.
+
 
 ## Development
 

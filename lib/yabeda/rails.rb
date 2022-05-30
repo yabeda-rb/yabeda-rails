@@ -22,10 +22,19 @@ module Yabeda
         controller_handlers << block
       end
 
+      attr_accessor :enable_controller_action_default_tags
+
       # Declare metrics and install event handlers for collecting themya
       # rubocop: disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
       def install!
         Yabeda.configure do
+          if enable_controller_action_default_tags
+            ::ActionController::Metal.prepend(::Yabeda::Rails::ActionControllerTags)
+
+            default_tags :controller, ""
+            default_tags :action, ""
+          end
+
           group :rails
 
           counter   :requests_total,   comment: "A counter of the total number of HTTP requests rails processed.",

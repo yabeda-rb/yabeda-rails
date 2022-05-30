@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.8.0 - 2022-05-30
+
+### Added
+
+- Add ability to expose custom Apdex target value for later use in graphs/alerts. [@Envek][] in [#18](https://github.com/yabeda-rb/yabeda-rails/pull/18)
+
+### Changed
+
+- Reduce number of dependencies by depending only on railties instead of the whole Ruby on Rails. [@lautis][] in [#23](https://github.com/yabeda-rb/yabeda-rails/pull/23).
+
 ## 0.7.2 - 2021-03-15
 
 ### Fixed
@@ -65,4 +75,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
    Basic metrics for request durations by controller, action, status, format, and method. ActiveRecord and ActionView timings.
 
+[@Envek]: https://github.com/Envek "Andrey Novikov"
 [@liaden]: https://github.com/liaden "Joel Johnson"
+[@lautis]: https://github.com/lautis "Ville Lautanala"

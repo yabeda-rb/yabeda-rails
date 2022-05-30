@@ -41,3 +41,5 @@ Style/TrailingCommaInHashLiteral:
   Enabled: true
   EnforcedStyleForMultiline: consistent_comma
 
+Bundler/DuplicatedGem:
+  Enabled: false

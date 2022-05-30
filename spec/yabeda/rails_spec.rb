@@ -1,11 +1,26 @@
 # frozen_string_literal: true
 
-RSpec.describe Yabeda::Rails do
-  it "has a version number" do
-    expect(Yabeda::Rails::VERSION).not_to be nil
+require "action_controller/test_case"
+
+RSpec.describe Yabeda::Rails, type: :integration do
+  include ActionDispatch::Integration::Runner
+  include ActionDispatch::IntegrationTest::Behavior
+
+  def app
+    TestApplication
   end
 
-  xit "does something useful" do
-    # Nothing here
+  it "increments counters for every request" do
+    expect { get "/hello/world" }.to \
+      increment_yabeda_counter(Yabeda.rails.requests_total)
+      .with_tags(controller: "hello", action: "world", status: 200, method: "get", format: :html)
+      .by(1)
+  end
+
+  it "measure action runtime for every request" do
+    expect { get "/hello/long" }.to \
+      measure_yabeda_histogram(Yabeda.rails.request_duration)
+      .with_tags(controller: "hello", action: "long", status: 200, method: "get", format: :html)
+      .with(be_between(0.005, 0.05))
   end
 end

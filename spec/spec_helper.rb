@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
+ENV["RAILS_ENV"] = "test"
+
 require "bundler/setup"
+require "debug"
 require "yabeda/rails"
+require "yabeda/rspec"
+
+require_relative "support/rails_app"
+
+require "rspec/rails"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -12,5 +20,12 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  Kernel.srand config.seed
+  config.order = :random
+
+  config.before(:suite) do
+    Yabeda::Rails.install!
   end
 end

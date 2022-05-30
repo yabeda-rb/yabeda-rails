@@ -1,4 +1,4 @@
-name: Run tests
+name: Tests
 
 on:
   pull_request:
@@ -10,21 +10,29 @@ on:
 
 jobs:
   test:
-    name: "Run tests"
-    if: "! contains(toJSON(github.event.commits.latest.message), '[ci skip]')"
+    name: 'Rails ${{ matrix.rails }} × Ruby ${{ matrix.ruby }}'
+    # Skip running tests for local pull requests (use push event instead), run only for foreign ones
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.owner.login != github.event.pull_request.base.repo.owner.login
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - ruby: 3.0
-          - ruby: 2.7
-          - ruby: 2.6
-          - ruby: 2.5
+          - ruby:  "3.1"
+            rails: "HEAD"
+          - ruby:  "3.0"
+            rails: "7.0"
+          - ruby:  "2.7"
+            rails: "6.1"
+          - ruby:  "2.6"
+            rails: "6.0"
+          - ruby:  "2.5"
+            rails: "5.2"
     container:
       image: ruby:${{ matrix.ruby }}
       env:
         CI: true
+        RAILS_VERSION: ${{ matrix.rails }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
@@ -41,7 +49,5 @@ jobs:
           bundle config path vendor/bundle
           bundle install
           bundle update
-      - name: Run Rubocop
-        run: bundle exec rubocop
       - name: Run RSpec
         run: bundle exec rspec

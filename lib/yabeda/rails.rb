@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require "yabeda"
-require "rails"
+require "active_support"
+require "rails/railtie"
 require "yabeda/rails/railtie"
 
 module Yabeda

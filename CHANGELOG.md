@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.8.1 - 2022-06-06
+
+### Fixed
+
+- Fill status codes for responses with unhandled exceptions. [@dks17][] in [#24](https://github.com/yabeda-rb/yabeda-rails/pull/24)
+
 ## 0.8.0 - 2022-05-30
 
 ### Added
@@ -78,3 +84,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@Envek]: https://github.com/Envek "Andrey Novikov"
 [@liaden]: https://github.com/liaden "Joel Johnson"
 [@lautis]: https://github.com/lautis "Ville Lautanala"
+[@dks17]: https://github.com/dks17 "Konstantin"

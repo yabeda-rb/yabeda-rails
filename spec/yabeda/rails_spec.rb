@@ -23,4 +23,10 @@ RSpec.describe Yabeda::Rails, type: :integration do
       .with_tags(controller: "hello", action: "long", status: 200, method: "get", format: :html)
       .with(be_between(0.005, 0.05))
   end
+
+  it "returns internal_server_error status code" do
+    expect { get "/hello/internal_server_error" }.to \
+      increment_yabeda_counter(Yabeda.rails.requests_total)
+      .with_tags(controller: "hello", action: "internal_server_error", status: 500, method: "get", format: :html)
+  end
 end

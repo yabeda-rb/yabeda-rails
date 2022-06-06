@@ -13,6 +13,7 @@ class TestApplication < Rails::Application
   routes.append do
     get "/hello/world" => "hello#world"
     get "/hello/long" => "hello#long"
+    get "/hello/internal_server_error" => "hello#internal_server_error"
   end
 end
 
@@ -24,6 +25,10 @@ class HelloController < ActionController::API
   def long
     sleep(0.01)
     render json: { good: :morning }
+  end
+
+  def internal_server_error
+    raise StandardError
   end
 end
 

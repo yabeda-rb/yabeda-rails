@@ -59,11 +59,11 @@ module Yabeda
             labels = {
               controller: event.controller,
               action: event.payload[:params]["action"],
-              status: Yabeda::Rails.event_status_code(event),
+              status: event.status_code,
               format: event.payload[:format],
               method: event.payload[:method].downcase,
             }
-            puts labels
+
             labels.merge!(event.payload.slice(*Yabeda.default_tags.keys - labels.keys))
 
             rails_requests_total.increment(labels)
@@ -85,14 +85,6 @@ module Yabeda
 
       def ms2s(milliseconds)
         (milliseconds.to_f / 1000).round(3)
-      end
-
-      def event_status_code(event)
-        if event.payload[:status].nil? && event.payload[:exception].present?
-          ActionDispatch::ExceptionWrapper.status_code_for_exception(event.payload[:exception].first)
-        else
-          event.payload[:status]
-        end
       end
     end
   end

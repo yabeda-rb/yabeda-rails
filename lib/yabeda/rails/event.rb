@@ -11,6 +11,14 @@ module Yabeda
           payload[:controller]
         end
       end
+
+      def status_code
+        if payload[:status].nil? && payload[:exception].present?
+          ActionDispatch::ExceptionWrapper.status_code_for_exception(payload[:exception].first)
+        else
+          payload[:status]
+        end
+      end
     end
   end
 end

@@ -56,35 +56,22 @@ module Yabeda
 
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
             event = Yabeda::Rails::Event.new(*args)
-            labels = {
-              controller: event.controller,
-              action: event.payload[:params]["action"],
-              status: event.status_code,
-              format: event.payload[:format],
-              method: event.payload[:method].downcase,
-            }
 
-            labels.merge!(event.payload.slice(*Yabeda.default_tags.keys - labels.keys))
-
-            rails_requests_total.increment(labels)
-            rails_request_duration.measure(labels, Yabeda::Rails.ms2s(event.duration))
-            rails_view_runtime.measure(labels, Yabeda::Rails.ms2s(event.payload[:view_runtime]))
-            rails_db_runtime.measure(labels, Yabeda::Rails.ms2s(event.payload[:db_runtime]))
+            rails_requests_total.increment(event.labels)
+            rails_request_duration.measure(event.labels, event.duration)
+            rails_view_runtime.measure(event.labels, event.view_runtime)
+            rails_db_runtime.measure(event.labels, event.db_runtime)
 
             Yabeda::Rails.controller_handlers.each do |handler|
-              handler.call(event, labels)
+              handler.call(event, event.labels)
             end
           end
         end
       end
       # rubocop: enable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
-      #
+
       def config
         @config ||= Config.new
-      end
-
-      def ms2s(milliseconds)
-        (milliseconds.to_f / 1000).round(3)
       end
     end
   end

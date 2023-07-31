@@ -31,11 +31,14 @@ RSpec.describe Yabeda::Rails, type: :integration do
   end
 
   it "supports configuring controller name case" do
+    original_case = Yabeda::Rails.config.controller_name_case
     Yabeda::Rails.config.controller_name_case = :camel
 
     expect { get "/hello/world" }.to \
       increment_yabeda_counter(Yabeda.rails.requests_total)
       .with_tags(controller: "HelloController", action: "world", status: 200, method: "get", format: :html)
       .by(1)
+
+    Yabeda::Rails.config.controller_name_case = original_case
   end
 end

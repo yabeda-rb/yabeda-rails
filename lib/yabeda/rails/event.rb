@@ -32,10 +32,10 @@ module Yabeda
 
       def controller
         case Yabeda::Rails.config.controller_name_case
-        when :snake
-          payload[:params]["controller"]
         when :camel
           payload[:controller]
+        else
+          payload[:params]["controller"]
         end
       end
 

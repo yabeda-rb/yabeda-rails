@@ -5,6 +5,7 @@ require "active_support"
 require "rails/railtie"
 require "yabeda/rails/railtie"
 require "yabeda/rails/config"
+require "yabeda/rails/event"
 
 module Yabeda
   # Minimal set of Rails-specific metrics for using with Yabeda
@@ -27,7 +28,7 @@ module Yabeda
       # rubocop: disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
       def install!
         Yabeda.configure do
-          config = Config.new
+          config = ::Yabeda::Rails.config
 
           group :rails
 
@@ -54,14 +55,15 @@ module Yabeda
           end
 
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
-            event = ActiveSupport::Notifications::Event.new(*args)
+            event = Yabeda::Rails::Event.new(*args)
             labels = {
-              controller: event.payload[:params]["controller"],
+              controller: event.controller,
               action: event.payload[:params]["action"],
               status: Yabeda::Rails.event_status_code(event),
               format: event.payload[:format],
               method: event.payload[:method].downcase,
             }
+            puts labels
             labels.merge!(event.payload.slice(*Yabeda.default_tags.keys - labels.keys))
 
             rails_requests_total.increment(labels)
@@ -76,6 +78,10 @@ module Yabeda
         end
       end
       # rubocop: enable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
+      #
+      def config
+        @config ||= Config.new
+      end
 
       def ms2s(milliseconds)
         (milliseconds.to_f / 1000).round(3)

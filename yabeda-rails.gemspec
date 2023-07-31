@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.4"
 
   spec.add_dependency "activesupport"
-  spec.add_dependency "anyway_config", ">= 1.3", "< 3"
+  spec.add_dependency "anyway_config", ">= 1.3", "< 2.5.0"
   spec.add_dependency "railties"
   spec.add_dependency "yabeda", "~> 0.8"
 

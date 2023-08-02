@@ -32,6 +32,4 @@ class HelloController < ActionController::API
   end
 end
 
-Rails.application = TestApplication
-
 TestApplication.initialize!

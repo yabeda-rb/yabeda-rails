@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.9.0 - 2023-08-03
+
+### Added
+
+- Ability to switch controller name case in `controller` tag between `:snake` and `:camel` case. [@lewispb][] in [#26](https://github.com/yabeda-rb/yabeda-rails/pull/26)
+
+## Changed
+
+- Minimal Ruby version increased to 2.5. [@Envek][]
+
 ## 0.8.1 - 2022-06-06
 
 ### Fixed
@@ -85,3 +95,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@liaden]: https://github.com/liaden "Joel Johnson"
 [@lautis]: https://github.com/lautis "Ville Lautanala"
 [@dks17]: https://github.com/dks17 "Konstantin"
+[@lewispb]: https://github.com/lewispb "Lewis Buckley"

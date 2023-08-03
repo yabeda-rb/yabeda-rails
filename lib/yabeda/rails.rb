@@ -5,6 +5,7 @@ require "active_support"
 require "rails/railtie"
 require "yabeda/rails/railtie"
 require "yabeda/rails/config"
+require "yabeda/rails/event"
 
 module Yabeda
   # Minimal set of Rails-specific metrics for using with Yabeda
@@ -27,7 +28,7 @@ module Yabeda
       # rubocop: disable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
       def install!
         Yabeda.configure do
-          config = Config.new
+          config = ::Yabeda::Rails.config
 
           group :rails
 
@@ -54,39 +55,23 @@ module Yabeda
           end
 
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
-            event = ActiveSupport::Notifications::Event.new(*args)
-            labels = {
-              controller: event.payload[:params]["controller"],
-              action: event.payload[:params]["action"],
-              status: Yabeda::Rails.event_status_code(event),
-              format: event.payload[:format],
-              method: event.payload[:method].downcase,
-            }
-            labels.merge!(event.payload.slice(*Yabeda.default_tags.keys - labels.keys))
+            event = Yabeda::Rails::Event.new(*args)
 
-            rails_requests_total.increment(labels)
-            rails_request_duration.measure(labels, Yabeda::Rails.ms2s(event.duration))
-            rails_view_runtime.measure(labels, Yabeda::Rails.ms2s(event.payload[:view_runtime]))
-            rails_db_runtime.measure(labels, Yabeda::Rails.ms2s(event.payload[:db_runtime]))
+            rails_requests_total.increment(event.labels)
+            rails_request_duration.measure(event.labels, event.duration)
+            rails_view_runtime.measure(event.labels, event.view_runtime)
+            rails_db_runtime.measure(event.labels, event.db_runtime)
 
             Yabeda::Rails.controller_handlers.each do |handler|
-              handler.call(event, labels)
+              handler.call(event, event.labels)
             end
           end
         end
       end
       # rubocop: enable Metrics/MethodLength, Metrics/BlockLength, Metrics/AbcSize
 
-      def ms2s(milliseconds)
-        (milliseconds.to_f / 1000).round(3)
-      end
-
-      def event_status_code(event)
-        if event.payload[:status].nil? && event.payload[:exception].present?
-          ActionDispatch::ExceptionWrapper.status_code_for_exception(event.payload[:exception].first)
-        else
-          event.payload[:status]
-        end
+      def config
+        @config ||= Config.new
       end
     end
   end

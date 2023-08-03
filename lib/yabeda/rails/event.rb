@@ -2,6 +2,7 @@
 
 module Yabeda
   module Rails
+    # ActiveSupport Event with added logic for Yabeda tags formatting
     class Event < ActiveSupport::Notifications::Event
       def labels
         @labels ||= begin

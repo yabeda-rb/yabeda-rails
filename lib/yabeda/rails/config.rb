@@ -4,6 +4,7 @@ require "anyway"
 
 module Yabeda
   module Rails
+    # yabeda-rails configuration
     class Config < ::Anyway::Config
       config_name :yabeda_rails
 

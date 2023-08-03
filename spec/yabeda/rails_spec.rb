@@ -30,15 +30,20 @@ RSpec.describe Yabeda::Rails, type: :integration do
       .with_tags(controller: "hello", action: "internal_server_error", status: 500, method: "get", format: :html)
   end
 
-  it "supports configuring controller name case" do
-    original_case = described_class.config.controller_name_case
-    described_class.config.controller_name_case = :camel
+  context "with changed controller name case config tp camel case" do
+    around do |example|
+      original_case = described_class.config.controller_name_case
+      described_class.config.controller_name_case = :camel
+      example.call
+    ensure
+      described_class.config.controller_name_case = original_case
+    end
 
-    expect { get "/hello/world" }.to \
-      increment_yabeda_counter(Yabeda.rails.requests_total)
-      .with_tags(controller: "HelloController", action: "world", status: 200, method: "get", format: :html)
-      .by(1)
-
-    described_class.config.controller_name_case = original_case
+    it "reports controller tag in camel case" do
+      expect { get "/hello/world" }.to \
+        increment_yabeda_counter(Yabeda.rails.requests_total)
+        .with_tags(controller: "HelloController", action: "world", status: 200, method: "get", format: :html)
+        .by(1)
+    end
   end
 end

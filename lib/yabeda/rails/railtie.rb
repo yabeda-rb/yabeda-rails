@@ -18,7 +18,7 @@ module Yabeda
       def unicorn_server?
         ::Rails.const_defined?("Unicorn::Launcher")
       end
-      
+
       def passenger_server?
         ::Rails.const_defined?("PhusionPassenger")
       end

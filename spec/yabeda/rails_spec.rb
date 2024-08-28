@@ -46,4 +46,30 @@ RSpec.describe Yabeda::Rails, type: :integration do
         .by(1)
     end
   end
+
+  context "with default_tags set" do
+    before do
+      Yabeda.default_tag :custom_tag, nil
+    end
+
+    it "increments counters for every request" do
+      expect { get "/hello/world" }.to \
+        increment_yabeda_counter(Yabeda.rails.requests_total)
+        .with_tags(custom_tag: "hello-world")
+        .by(1)
+    end
+  end
+
+  context "with ':rails' default_tags set" do
+    before do
+      Yabeda.default_tag :custom_tag_from_rails, nil, group: :rails
+    end
+
+    it "increments counters for every request" do
+      expect { get "/hello/world" }.to \
+        increment_yabeda_counter(Yabeda.rails.requests_total)
+        .with_tags(custom_tag_from_rails: "hello-world-from-rails")
+        .by(1)
+    end
+  end
 end

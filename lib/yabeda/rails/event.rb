@@ -13,7 +13,7 @@ module Yabeda
             format: format,
             method: method,
           }
-          labels.merge(payload.slice(*Yabeda.default_tags.keys - labels.keys))
+          labels.merge(payload.slice(*(Yabeda.default_tags.keys + Yabeda.rails.default_tags.keys) - labels.keys))
         end
       end
 

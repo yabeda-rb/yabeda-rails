@@ -18,6 +18,12 @@ class TestApplication < Rails::Application
 end
 
 class HelloController < ActionController::API
+  def append_info_to_payload(payload)
+    super
+    payload[:custom_tag_from_rails] = "hello-world-from-rails"
+    payload[:custom_tag] = "hello-world"
+  end
+
   def world
     render json: { hello: :world }
   end

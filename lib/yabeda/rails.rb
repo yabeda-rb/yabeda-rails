@@ -29,6 +29,7 @@ module Yabeda
       def install!
         Yabeda.configure do
           config = ::Yabeda::Rails.config
+          buckets = config.buckets || LONG_RUNNING_REQUEST_BUCKETS
 
           group :rails
 
@@ -37,14 +38,14 @@ module Yabeda
 
           histogram :request_duration, tags: %i[controller action status format method],
                                        unit: :seconds,
-                                       buckets: LONG_RUNNING_REQUEST_BUCKETS,
+                                       buckets: buckets,
                                        comment: "A histogram of the response latency."
 
-          histogram :view_runtime, unit: :seconds, buckets: LONG_RUNNING_REQUEST_BUCKETS,
+          histogram :view_runtime, unit: :seconds, buckets: buckets,
                                    comment: "A histogram of the view rendering time.",
                                    tags: %i[controller action status format method]
 
-          histogram :db_runtime, unit: :seconds, buckets: LONG_RUNNING_REQUEST_BUCKETS,
+          histogram :db_runtime, unit: :seconds, buckets: buckets,
                                  comment: "A histogram of the activerecord execution time.",
                                  tags: %i[controller action status format method]
 

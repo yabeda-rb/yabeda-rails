@@ -76,6 +76,15 @@ end
 ```
 `append_info_to_payload` is a method from [ActionController::Instrumentation](https://api.rubyonrails.org/classes/ActionController/Instrumentation.html#method-i-append_info_to_payload)
 
+## Configuration
+
+Configuration is handled by [anyway_config] gem. With it you can load settings from environment variables (upcased and prefixed with `YABEDA_RAILS_`), YAML files, and other sources. See [anyway_config] docs for details.
+
+| Config key             | Type    | Default | Description                                                                                                                                           |
+| ---------------------- | ------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apdex_target`         | integer | nil     | Tolerable time for Apdex in seconds, exposed as gauge if set.                                                                                         |
+| `controller_name_case` | symbol  | :snake  | Defines whether controller name is reported in camel case (:camel) or snake case (:snake).                                                            |
+| `ignore_actions`       | array   | []      | array of controller#action strings that should be ignored, controller should be in camel case, example `['HealthCheck::HealthCheckController#index']` |
 
 ## Development
 

@@ -57,6 +57,8 @@ module Yabeda
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
             event = Yabeda::Rails::Event.new(*args)
 
+            next if event.controller_action.in?(config.ignore_actions)
+
             rails_requests_total.increment(event.labels)
             rails_request_duration.measure(event.labels, event.duration)
             rails_view_runtime.measure(event.labels, event.view_runtime)

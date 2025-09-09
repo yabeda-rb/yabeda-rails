@@ -19,8 +19,12 @@ module Yabeda
         ::Rails.const_defined?("Unicorn::Launcher")
       end
 
+      def passenger_server?
+        ::Rails.const_defined?("PhusionPassenger")
+      end
+
       initializer "yabeda-rails.metrics" do
-        ::Yabeda::Rails.install! if rails_server? || puma_server? || unicorn_server?
+        ::Yabeda::Rails.install! if rails_server? || puma_server? || unicorn_server? || passenger_server?
       end
     end
   end

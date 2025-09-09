@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.10.0 - 2025-09-09
+
+### Added
+
+- Add Passenger server to auto register list [@mabrikan][] in [#28](https://github.com/yabeda-rb/yabeda-rails/pull/28)
+- Allow defining default_tags only for rails group [@magec][] in [#30](https://github.com/yabeda-rb/yabeda-rails/pull/30)
+- Ability to customize the bucket sizing for histograms [@skateman][] in [#32](https://github.com/yabeda-rb/yabeda-rails/pull/32)
+- Ability to ignore certain controller#actions [@zzip][] in [#33](https://github.com/yabeda-rb/yabeda-rails/pull/33)
+
 ## 0.9.0 - 2023-08-03
 
 ### Added
@@ -96,3 +105,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@lautis]: https://github.com/lautis "Ville Lautanala"
 [@dks17]: https://github.com/dks17 "Konstantin"
 [@lewispb]: https://github.com/lewispb "Lewis Buckley"
+[@mabrikan]: https://github.com/mabrikan "Musaed Albrikan"
+[@magec]: https://github.com/magec "Jose Fernández"
+[@skateman]: https://github.com/skateman "Halász Dávid"
+[@zzip]: https://github.com/zzip "Dale Hofkens"

@@ -9,6 +9,7 @@ module Yabeda
       config_name :yabeda_rails
 
       attr_config :apdex_target
+      attr_config :buckets
       attr_config controller_name_case: :snake
     end
   end

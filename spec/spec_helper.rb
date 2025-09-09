@@ -3,6 +3,7 @@
 ENV["RAILS_ENV"] = "test"
 
 require "bundler/setup"
+require "logger"
 require "debug"
 require "yabeda/rails"
 require "yabeda/rspec"

@@ -7,7 +7,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 # Specify your gem's dependencies in yabeda-rails.gemspec
 gemspec
 
-rails_version = ENV.fetch("RAILS_VERSION", "~> 7.0")
+rails_version = ENV.fetch("RAILS_VERSION", "~> 8.0")
 case rails_version
 when "HEAD"
   git "https://github.com/rails/rails.git" do

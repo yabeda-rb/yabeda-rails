@@ -29,6 +29,10 @@ module Yabeda
         ms2s payload[:db_runtime]
       end
 
+      def controller_action
+        "#{payload[:controller]}##{payload[:action]}"
+      end
+
       private
 
       def controller

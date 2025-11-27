@@ -84,7 +84,7 @@ Configuration is handled by [anyway_config] gem. With it you can load settings f
 | ---------------------- | ------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `apdex_target`         | integer | nil     | Tolerable time for Apdex in seconds, exposed as gauge if set.                                                                                         |
 | `controller_name_case` | symbol  | :snake  | Defines whether controller name is reported in camel case (:camel) or snake case (:snake).                                                            |
-| `ignore_actions`       | array   | []      | array of controller#action strings that should be ignored, controller should be in camel case, example `['HealthCheck::HealthCheckController#index']` |
+| `ignore_actions`       | array or proc | []      | array of controller#action strings or a proc that receives the controller#action string and returns true if the action should be ignored. Controller should be in camel case, example `['HealthCheck::HealthCheckController#index']` or `->(controller_action) { controller_action.start_with?("HealthCheck") }` |
 
 ## Development
 

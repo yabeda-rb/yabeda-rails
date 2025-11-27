@@ -76,7 +76,9 @@ RSpec.describe Yabeda::Rails, type: :integration do
   context "with ignore_actions as a proc" do
     around do |example|
       original_ignore_actions = described_class.config.ignore_actions
-      described_class.config.ignore_actions = ->(controller_action) { controller_action.start_with?("HelloController#") }
+      described_class.config.ignore_actions = lambda { |controller_action|
+        controller_action.start_with?("HelloController#")
+      }
       example.call
     ensure
       described_class.config.ignore_actions = original_ignore_actions

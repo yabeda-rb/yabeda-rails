@@ -72,4 +72,21 @@ RSpec.describe Yabeda::Rails, type: :integration do
         .by(1)
     end
   end
+
+  context "with ignore_actions as a proc" do
+    around do |example|
+      original_ignore_actions = described_class.config.ignore_actions
+      described_class.config.ignore_actions = lambda { |controller_action|
+        controller_action.start_with?("HelloController#")
+      }
+      example.call
+    ensure
+      described_class.config.ignore_actions = original_ignore_actions
+    end
+
+    it "ignores actions matching the proc" do
+      expect { get "/hello/world" }.not_to \
+        increment_yabeda_counter(Yabeda.rails.requests_total)
+    end
+  end
 end

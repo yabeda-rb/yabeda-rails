@@ -58,7 +58,9 @@ module Yabeda
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
             event = Yabeda::Rails::Event.new(*args)
 
-            next if Yabeda::Rails.ignore_action?(config.ignore_actions, event.controller_action)
+            # rubocop: disable Style/CaseEquality
+            next if Array(config.ignore_actions).any? { |action| action === event.controller_action }
+            # rubocop: enable Style/CaseEquality
 
             rails_requests_total.increment(event.labels)
             rails_request_duration.measure(event.labels, event.duration)
@@ -75,14 +77,6 @@ module Yabeda
 
       def config
         @config ||= Config.new
-      end
-
-      def ignore_action?(ignore_actions, controller_action)
-        if ignore_actions.respond_to?(:call)
-          ignore_actions.call(controller_action)
-        else
-          controller_action.in?(ignore_actions)
-        end
       end
     end
   end

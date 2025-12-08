@@ -15,6 +15,10 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/yabeda-rb/yabeda-rails"
   spec.license       = "MIT"
 
+  spec.metadata = {
+    "changelog_uri" => "https://github.com/yabeda-rb/yabeda-rails/blob/master/CHANGELOG.md",
+  }
+
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end

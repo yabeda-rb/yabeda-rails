@@ -12,6 +12,7 @@ module Yabeda
       attr_config :buckets
       attr_config controller_name_case: :snake
       attr_config ignore_actions: []
+      attr_config group_name: :rails
     end
   end
 end

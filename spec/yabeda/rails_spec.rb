@@ -104,4 +104,36 @@ RSpec.describe Yabeda::Rails, type: :integration do
         increment_yabeda_counter(Yabeda.rails.requests_total)
     end
   end
+
+  context "with custom group name" do
+    around do |example|
+      original_group_name = described_class.config.group_name
+      described_class.config.group_name = :custom_group
+
+      reset_and_reinstall_rails_metrics!
+      example.call
+    ensure
+      described_class.config.group_name = original_group_name
+      reset_and_reinstall_rails_metrics!
+    end
+
+    it "reports metrics in the custom group" do
+      expect { get "/hello/world" }.to \
+        increment_yabeda_counter(Yabeda.custom_group.requests_total).
+        with_tags(controller: "hello", action: "world", status: 200, method: "get", format: :html).
+        by(1)
+    end
+  end
+
+  def reset_and_reinstall_rails_metrics!
+    ActiveSupport::Notifications.notifier.listeners_for("process_action.action_controller").each do |listener|
+      ActiveSupport::Notifications.unsubscribe(listener)
+    end
+
+    Yabeda.reset!
+    Yabeda.register_adapter(:test, Yabeda::TestAdapter.instance)
+
+    Yabeda::Rails.install!
+    Yabeda.configure!
+  end
 end

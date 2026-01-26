@@ -30,8 +30,7 @@ module Yabeda
         Yabeda.configure do
           config = ::Yabeda::Rails.config
           buckets = config.buckets || LONG_RUNNING_REQUEST_BUCKETS
-
-          group :rails
+          group config.group_name
 
           counter   :requests_total,   comment: "A counter of the total number of HTTP requests rails processed.",
                                        tags: %i[controller action status format method]
@@ -52,7 +51,7 @@ module Yabeda
           if config.apdex_target
             gauge :apdex_target, unit: :seconds,
                                  comment: "Tolerable time for Apdex (T value: maximum duration of satisfactory request)"
-            collect { rails_apdex_target.set({}, config.apdex_target) }
+            collect { Yabeda::Rails.metric_group.apdex_target.set({}, config.apdex_target) }
           end
 
           ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
@@ -62,10 +61,10 @@ module Yabeda
             next if Array(config.ignore_actions).any? { |action| action === event.controller_action }
             # rubocop: enable Style/CaseEquality
 
-            rails_requests_total.increment(event.labels)
-            rails_request_duration.measure(event.labels, event.duration)
-            rails_view_runtime.measure(event.labels, event.view_runtime)
-            rails_db_runtime.measure(event.labels, event.db_runtime)
+            Yabeda::Rails.metric_group.requests_total.increment(event.labels)
+            Yabeda::Rails.metric_group.request_duration.measure(event.labels, event.duration)
+            Yabeda::Rails.metric_group.view_runtime.measure(event.labels, event.view_runtime)
+            Yabeda::Rails.metric_group.db_runtime.measure(event.labels, event.db_runtime)
 
             Yabeda::Rails.controller_handlers.each do |handler|
               handler.call(event, event.labels)
@@ -77,6 +76,10 @@ module Yabeda
 
       def config
         @config ||= Config.new
+      end
+
+      def metric_group
+        Yabeda.groups[config.group_name]
       end
     end
   end
